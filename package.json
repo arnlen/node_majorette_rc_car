@@ -1,0 +1,28 @@
+{
+  "name": "node_majorette_rc_car",
+  "version": "1.0.0",
+  "description": "Node Server to run on my hacker Majorette RC Car Edit",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arnlen/node_majorette_rc_car.git"
+  },
+  "keywords": [
+    "IoT",
+    "Robot",
+    "Raspberry"
+  ],
+  "author": "Arnaud Lenglet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arnlen/node_majorette_rc_car/issues"
+  },
+  "homepage": "https://github.com/arnlen/node_majorette_rc_car#readme",
+  "dependencies": {
+    "express": "^4.15.1",
+    "socket.io": "^1.7.3"
+  }
+}
