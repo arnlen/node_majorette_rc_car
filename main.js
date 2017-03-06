@@ -9,29 +9,41 @@ server.listen(8080); //start the webserver on port 8080
 app.use(express.static('public')); //tell the server that ./public/ contains the static webpages
 console.log("running");
 
+// Config
+var motor1EnablePin = 33; //pwm
+var motor1Input1Pin = 12;
+var motor1Input2Pin = 16;
+
+var motor2EnablePin = 35; //pwm
+var motor2Input1Pin = 18;
+var motor2Input2Pin = 22;
+
 // RPIO Setup and pin init
 var rpio = require('rpio');
 
-// rpio.open(33, rpio.PWM);                    // Enable 1
-// rpio.open(32, rpio.PWM);                    // Enable 2
-rpio.open(33, rpio.OUTPUT, rpio.LOW);          // Enable 1
-rpio.open(32, rpio.OUTPUT, rpio.LOW);          // Enable 2
+rpio.open(motor1EnablePin, rpio.OUTPUT, rpio.LOW);          // Enable 1
+rpio.open(motor2EnablePin, rpio.OUTPUT, rpio.LOW);          // Enable 2
 
-rpio.open(12, rpio.OUTPUT, rpio.LOW);       // Motor 1, Input 1
-rpio.open(16, rpio.OUTPUT, rpio.LOW);       // Motor 1, Input 2
-rpio.open(18, rpio.OUTPUT, rpio.LOW);       // Motor 2, Input 1
-rpio.open(22, rpio.OUTPUT, rpio.LOW);       // Motor 2, Input 2
+rpio.open(motor1Input1Pin, rpio.OUTPUT, rpio.LOW);       // Motor 1, Input 1
+rpio.open(motor1Input2Pin, rpio.OUTPUT, rpio.LOW);       // Motor 1, Input 2
+rpio.open(motor2Input1Pin, rpio.OUTPUT, rpio.LOW);       // Motor 2, Input 1
+rpio.open(motor2Input2Pin, rpio.OUTPUT, rpio.LOW);       // Motor 2, Input 2
 
 // TEST RUN
+rpio.write(motor1EnablePin, rpio.HIGH);
+console.read("Motor 1 Enable: " + rpio.read(motor1EnablePin);
+rpio.write(motor2EnablePin, rpio.HIGH);
+console.read("Motor 2 Enable: " + rpio.read(motor2EnablePin);
 
-rpio.write(32, rpio.HIGH);
-rpio.write(33, rpio.HIGH);
+rpio.write(motor1Input1Pin, rpio.HIGH);
+console.read("Motor 1 Input 1: " + rpio.read(motor1Input1Pin);
+rpio.write(motor1Input2Pin, rpio.LOW);
+console.read("Motor 1 Input 2: " + rpio.read(motor1Input2Pin);
 
-rpio.write(12, rpio.HIGH);
-rpio.write(16, rpio.LOW);
-
-rpio.write(18, rpio.HIGH);
-rpio.write(22, rpio.LOW);
+rpio.write(motor2Input1Pin, rpio.HIGH);
+console.read("Motor 2 Input 1: " + rpio.read(motor2Input1Pin);
+rpio.write(motor2Input2Pin, rpio.LOW);
+console.read("Motor 2 Input 2: " + rpio.read(motor2Input2Pin);
 
 
 // var brightness = 0; //static variable to hold the current brightness
