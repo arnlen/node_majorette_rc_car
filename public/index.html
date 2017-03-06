@@ -8,9 +8,28 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <input type="range" id= "inputSlider" min="-100" max="100" value="0" step="1" oninput="showValue(this.value)" />
 
-    <br><br><span id="outputText">50</span>
+  <h1>RC Car Controller</h1>
+
+    <input  type="range"
+            id= "inputSlider"
+            min="-100"
+            max="100"
+            value="0"
+            step="1"
+            oninput="showValue(this.value)" />
+
+    <br><br><span id="outputText">0</span>
+
+    <input  type="range"
+            id= "inputSlider2"
+            min="-100"
+            max="100"
+            value="0"
+            step="1"
+            oninput="showValue2(this.value)" />
+
+    <br><br><span id="outputText2">0</span>
 
     <script type="text/javascript">
         var socket = io.connect();
@@ -20,11 +39,21 @@
             document.getElementById("outputText").innerHTML = data.value;
         });
 
-        function showValue(newValue)
-        {
+        socket.on('motor2', function (data) {
+            document.getElementById("inputSlider2").value = data.value;
+            document.getElementById("outputText2").innerHTML = data.value;
+        });
+
+        function showValue(newValue) {
             document.getElementById("outputText").innerHTML=newValue;
             socket.emit('motor1', { value: newValue });
         }
+
+        function showValue2(newValue) {
+            document.getElementById("outputText2").innerHTML=newValue;
+            socket.emit('motor2', { value: newValue });
+        }
+
     </script>
   </body>
 </html>

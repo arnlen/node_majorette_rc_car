@@ -52,6 +52,7 @@ io.sockets.on('connection', function (socket) { //gets called whenever a client 
     console.log("connected");
 
     socket.on('motor1', function (data) { //makes the socket react to 'motor1' packets by calling this function
+        rpio.write(motor1EnablePin, rpio.HIGH);
         speed = data.value;  //updates speed from the data object
 
         if (speed > 0) {
@@ -61,9 +62,26 @@ io.sockets.on('connection', function (socket) { //gets called whenever a client 
           rpio.write(motor1Input1Pin, rpio.LOW);
           rpio.write(motor1Input2Pin, rpio.HIGH);
         } else {
-          rpio.write(motor1EnablePin, rpio.HIGH);
+          rpio.write(motor1EnablePin, rpio.LOW);
         }
 
         io.sockets.emit('motor1', {value: speed}); //sends the updated speed to all connected clients
+    });
+
+    socket.on('motor2', function (data) { //makes the socket react to 'motor1' packets by calling this function
+        rpio.write(motor2EnablePin, rpio.HIGH);
+        speed = data.value;  //updates speed from the data object
+
+        if (speed > 0) {
+          rpio.write(motor2Input1Pin, rpio.HIGH);
+          rpio.write(motor2Input2Pin, rpio.LOW);
+        } else if (speed < 0) {
+          rpio.write(motor2Input1Pin, rpio.LOW);
+          rpio.write(motor2Input2Pin, rpio.HIGH);
+        } else {
+          rpio.write(motor2EnablePin, rpio.LOW);
+        }
+
+        io.sockets.emit('motor2', {value: speed}); //sends the updated speed to all connected clients
     });
 });
