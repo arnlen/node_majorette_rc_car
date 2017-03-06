@@ -23,6 +23,7 @@ io.sockets.on('connection', function (socket) {
     socket.emit('motor2', { value: motors.getMotorSpeed(2) });
 
     socket.on('motor1', function (data) {
+      console.log("Motor 1 triggered");
       var motorId = 1;
       motors.runMotor(motorId, data.value);
       // Send the new speed to all connected clients
@@ -30,6 +31,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('motor2', function (data) {
+      console.log("Motor 2 triggered");
       var motorId = 2;
       motors.runMotor(motorId, data.value);
       // Send the new speed to all connected clients
