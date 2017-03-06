@@ -31,19 +31,19 @@ rpio.open(motor2Input2Pin, rpio.OUTPUT, rpio.LOW);       // Motor 2, Input 2
 
 // TEST RUN
 rpio.write(motor1EnablePin, rpio.HIGH);
-console.read("Motor 1 Enable: " + rpio.read(motor1EnablePin));
+console.log("Motor 1 Enable: " + rpio.read(motor1EnablePin));
 rpio.write(motor2EnablePin, rpio.HIGH);
-console.read("Motor 2 Enable: " + rpio.read(motor2EnablePin));
+console.log("Motor 2 Enable: " + rpio.read(motor2EnablePin));
 
 rpio.write(motor1Input1Pin, rpio.HIGH);
-console.read("Motor 1 Input 1: " + rpio.read(motor1Input1Pin));
+console.log("Motor 1 Input 1: " + rpio.read(motor1Input1Pin));
 rpio.write(motor1Input2Pin, rpio.LOW);
-console.read("Motor 1 Input 2: " + rpio.read(motor1Input2Pin));
+console.log("Motor 1 Input 2: " + rpio.read(motor1Input2Pin));
 
 rpio.write(motor2Input1Pin, rpio.HIGH);
-console.read("Motor 2 Input 1: " + rpio.read(motor2Input1Pin));
+console.log("Motor 2 Input 1: " + rpio.read(motor2Input1Pin));
 rpio.write(motor2Input2Pin, rpio.LOW);
-console.read("Motor 2 Input 2: " + rpio.read(motor2Input2Pin));
+console.log("Motor 2 Input 2: " + rpio.read(motor2Input2Pin));
 
 
 // var brightness = 0; //static variable to hold the current brightness
