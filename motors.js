@@ -17,6 +17,13 @@ var rpio = require('rpio');
 // --- --- PUBLIC METHODS --- ---
 
 exports.initMotorsPins = function() {
+  // PWM
+  // rpio.pwmSetClockDivider(64);
+  // rpio.open(motor1EnablePin, rpio.PWM);
+  // rpio.pwmSetRange(motor1EnablePin, 1024);
+  // rpio.open(motor2EnablePin, rpio.PWM);
+  // rpio.pwmSetRange(motor2EnablePin, 1024);
+
   rpio.open(motor1EnablePin, rpio.OUTPUT, rpio.LOW);       // Enable 1
   rpio.open(motor2EnablePin, rpio.OUTPUT, rpio.LOW);       // Enable 2
 
@@ -52,6 +59,7 @@ exports.getMotorSpeed = function(motorId) {
 
 // --- --- PRIVATE METHODS --- ---
 
+// USELESS with PWM ?
 var activateMotor = function(motorId) {
   switch (motorId) {
     case 1:
@@ -63,6 +71,7 @@ var activateMotor = function(motorId) {
   }
 }
 
+// USELESS with PWM ?
 var deactivateMotor = function(motorId) {
   switch (motorId) {
     case 1:
@@ -85,28 +94,30 @@ var setMotorSpeed = function(motorId, speed) {
   }
 }
 
-// TODO: Make use of speed
 var runForward = function(motorId, absoluteSpeed) {
   switch (motorId) {
     case 1:
+      rpio.pwmSetData(motor1EnablePin, absoluteSpeed);
       rpio.write(motor1Input1Pin, rpio.HIGH);
       rpio.write(motor1Input2Pin, rpio.LOW);
       break;
     case 2:
+      rpio.pwmSetData(motor1EnablePin, absoluteSpeed);
       rpio.write(motor2Input1Pin, rpio.HIGH);
       rpio.write(motor2Input2Pin, rpio.LOW);
       break;
   }
 }
 
-// TODO: Make use of speed
 var runBackward = function(motorId, absoluteSpeed) {
   switch (motorId) {
     case 1:
+      rpio.pwmSetData(motor1EnablePin, absoluteSpeed);
       rpio.write(motor1Input1Pin, rpio.LOW);
       rpio.write(motor1Input2Pin, rpio.HIGH);
       break;
     case 2:
+      rpio.pwmSetData(motor1EnablePin, absoluteSpeed);
       rpio.write(motor2Input1Pin, rpio.LOW);
       rpio.write(motor2Input2Pin, rpio.HIGH);
       break;
