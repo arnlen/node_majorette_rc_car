@@ -19,11 +19,11 @@ var rpio = require('rpio');
 exports.initMotorsPins = function() {
   // PWM
   rpio.open(motor1EnablePin, rpio.PWM);
-  rpio.pwmSetClockDivider(64);
-  rpio.pwmSetRange(motor1EnablePin, 1024);
+  rpio.pwmSetClockDivider(8);
+  rpio.pwmSetRange(motor1EnablePin, 128);
   rpio.open(motor2EnablePin, rpio.PWM);
-  rpio.pwmSetClockDivider(64);
-  rpio.pwmSetRange(motor2EnablePin, 1024);
+  rpio.pwmSetClockDivider(8);
+  rpio.pwmSetRange(motor2EnablePin, 128);
 
   // rpio.open(motor1EnablePin, rpio.OUTPUT, rpio.LOW);       // Enable 1
   // rpio.open(motor2EnablePin, rpio.OUTPUT, rpio.LOW);       // Enable 2
@@ -78,7 +78,7 @@ var runForward = function(motorId, absoluteSpeed) {
       rpio.write(motor1Input2Pin, rpio.LOW);
       break;
     case 2:
-      rpio.pwmSetData(motor1EnablePin, absoluteSpeed);
+      rpio.pwmSetData(motor2EnablePin, absoluteSpeed);
       rpio.write(motor2Input1Pin, rpio.HIGH);
       rpio.write(motor2Input2Pin, rpio.LOW);
       break;
@@ -93,7 +93,7 @@ var runBackward = function(motorId, absoluteSpeed) {
       rpio.write(motor1Input2Pin, rpio.HIGH);
       break;
     case 2:
-      rpio.pwmSetData(motor1EnablePin, absoluteSpeed);
+      rpio.pwmSetData(motor2EnablePin, absoluteSpeed);
       rpio.write(motor2Input1Pin, rpio.LOW);
       rpio.write(motor2Input2Pin, rpio.HIGH);
       break;
