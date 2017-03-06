@@ -18,10 +18,11 @@ var rpio = require('rpio');
 
 exports.initMotorsPins = function() {
   // PWM
-  rpio.pwmSetClockDivider(64);
   rpio.open(motor1EnablePin, rpio.PWM);
+  rpio.pwmSetClockDivider(64);
   rpio.pwmSetRange(motor1EnablePin, 1024);
   rpio.open(motor2EnablePin, rpio.PWM);
+  rpio.pwmSetClockDivider(64);
   rpio.pwmSetRange(motor2EnablePin, 1024);
 
   // rpio.open(motor1EnablePin, rpio.OUTPUT, rpio.LOW);       // Enable 1
