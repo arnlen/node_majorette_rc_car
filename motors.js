@@ -18,14 +18,14 @@ var rpio = require('rpio');
 
 exports.initMotorsPins = function() {
   // PWM
-  // rpio.pwmSetClockDivider(64);
-  // rpio.open(motor1EnablePin, rpio.PWM);
-  // rpio.pwmSetRange(motor1EnablePin, 1024);
-  // rpio.open(motor2EnablePin, rpio.PWM);
-  // rpio.pwmSetRange(motor2EnablePin, 1024);
+  rpio.pwmSetClockDivider(64);
+  rpio.open(motor1EnablePin, rpio.PWM);
+  rpio.pwmSetRange(motor1EnablePin, 1024);
+  rpio.open(motor2EnablePin, rpio.PWM);
+  rpio.pwmSetRange(motor2EnablePin, 1024);
 
-  rpio.open(motor1EnablePin, rpio.OUTPUT, rpio.LOW);       // Enable 1
-  rpio.open(motor2EnablePin, rpio.OUTPUT, rpio.LOW);       // Enable 2
+  // rpio.open(motor1EnablePin, rpio.OUTPUT, rpio.LOW);       // Enable 1
+  // rpio.open(motor2EnablePin, rpio.OUTPUT, rpio.LOW);       // Enable 2
 
   rpio.open(motor1Input1Pin, rpio.OUTPUT, rpio.LOW);       // Motor 1, Input 1
   rpio.open(motor1Input2Pin, rpio.OUTPUT, rpio.LOW);       // Motor 1, Input 2
@@ -34,15 +34,12 @@ exports.initMotorsPins = function() {
 };
 
 exports.runMotor = function(motorId, speed) {
-  activateMotor(motorId);
   setMotorSpeed(motorId, speed);
 
   if (speed > 0) {
     runForward(motorId, Math.abs(speed));
   } else if (speed < 0) {
     runBackward(motorId, Math.abs(speed));
-  } else {
-    deactivateMotor(motorId);
   }
 }
 
@@ -59,37 +56,15 @@ exports.getMotorSpeed = function(motorId) {
 
 // --- --- PRIVATE METHODS --- ---
 
-// USELESS with PWM ?
-var activateMotor = function(motorId) {
-  switch (motorId) {
-    case 1:
-      rpio.write(motor1EnablePin, rpio.HIGH);
-      break;
-    case 2:
-      rpio.write(motor2EnablePin, rpio.HIGH);
-      break;
-  }
-}
-
-// USELESS with PWM ?
-var deactivateMotor = function(motorId) {
-  switch (motorId) {
-    case 1:
-      rpio.write(motor1EnablePin, rpio.LOW);
-      break;
-    case 2:
-      rpio.write(motor2EnablePin, rpio.LOW);
-      break;
-  }
-}
-
 var setMotorSpeed = function(motorId, speed) {
   switch (motorId) {
     case 1:
       motor1Speed = speed;
+      console.log("Motor 1 set to " + speed);
       break;
     case 2:
       motor2Speed = speed;
+      console.log("Motor 2 set to " + speed);
       break;
   }
 }
