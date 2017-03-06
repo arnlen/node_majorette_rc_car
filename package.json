@@ -23,6 +23,7 @@
   "homepage": "https://github.com/arnlen/node_majorette_rc_car#readme",
   "dependencies": {
     "express": "^4.15.1",
+    "rpio": "^0.9.16",
     "socket.io": "^1.7.3"
   }
 }
