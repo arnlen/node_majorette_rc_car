@@ -30,33 +30,40 @@ rpio.open(motor2Input1Pin, rpio.OUTPUT, rpio.LOW);       // Motor 2, Input 1
 rpio.open(motor2Input2Pin, rpio.OUTPUT, rpio.LOW);       // Motor 2, Input 2
 
 // TEST RUN
-rpio.write(motor1EnablePin, rpio.HIGH);
-console.log("Motor 1 Enable: " + rpio.read(motor1EnablePin));
-rpio.write(motor2EnablePin, rpio.HIGH);
-console.log("Motor 2 Enable: " + rpio.read(motor2EnablePin));
+// rpio.write(motor1EnablePin, rpio.HIGH);
+// console.log("Motor 1 Enable: " + rpio.read(motor1EnablePin));
+// rpio.write(motor2EnablePin, rpio.HIGH);
+// console.log("Motor 2 Enable: " + rpio.read(motor2EnablePin));
 
-rpio.write(motor1Input1Pin, rpio.HIGH);
-console.log("Motor 1 Input 1: " + rpio.read(motor1Input1Pin));
-rpio.write(motor1Input2Pin, rpio.LOW);
-console.log("Motor 1 Input 2: " + rpio.read(motor1Input2Pin));
+// rpio.write(motor1Input1Pin, rpio.HIGH);
+// console.log("Motor 1 Input 1: " + rpio.read(motor1Input1Pin));
+// rpio.write(motor1Input2Pin, rpio.LOW);
+// console.log("Motor 1 Input 2: " + rpio.read(motor1Input2Pin));
 
-rpio.write(motor2Input1Pin, rpio.HIGH);
-console.log("Motor 2 Input 1: " + rpio.read(motor2Input1Pin));
-rpio.write(motor2Input2Pin, rpio.LOW);
-console.log("Motor 2 Input 2: " + rpio.read(motor2Input2Pin));
+// rpio.write(motor2Input1Pin, rpio.HIGH);
+// console.log("Motor 2 Input 1: " + rpio.read(motor2Input1Pin));
+// rpio.write(motor2Input2Pin, rpio.LOW);
+// console.log("Motor 2 Input 2: " + rpio.read(motor2Input2Pin));
 
 
-// var brightness = 0; //static variable to hold the current brightness
-// io.sockets.on('connection', function (socket) { //gets called whenever a client connects
-//     socket.emit('led', {value: brightness}); //send the new client the current brightness
-//     console.log("connected");
+var speed = 0; //static variable to hold the current speed
+io.sockets.on('connection', function (socket) { //gets called whenever a client connects
+    socket.emit('motor1', {value: speed}); //send the new client the current speed
+    console.log("connected");
 
-//     socket.on('led', function (data) { //makes the socket react to 'led' packets by calling this function
-//         brightness = data.value;  //updates brightness from the data object
-//         var buf = new Buffer(1); //creates a new 1-byte buffer
-//         buf.writeUInt8(brightness, 0); //writes the pwm value to the buffer
-//         serialPort.write(buf); //transmits the buffer to the arduino
+    socket.on('motor1', function (data) { //makes the socket react to 'motor1' packets by calling this function
+        speed = data.value;  //updates speed from the data object
 
-//         io.sockets.emit('led', {value: brightness}); //sends the updated brightness to all connected clients
-//     });
-// });
+        if (speed > 0) {
+          rpio.write(motor1Input1Pin, rpio.HIGH);
+          rpio.write(motor1Input2Pin, rpio.LOW);
+        } else if (speed < 0) {
+          rpio.write(motor1Input1Pin, rpio.LOW);
+          rpio.write(motor1Input2Pin, rpio.HIGH);
+        } else {
+          rpio.write(motor1EnablePin, rpio.HIGH);
+        }
+
+        io.sockets.emit('motor1', {value: speed}); //sends the updated speed to all connected clients
+    });
+});
